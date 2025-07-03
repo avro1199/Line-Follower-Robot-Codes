@@ -30,15 +30,17 @@ void show_as_bars(uint16_t *data, uint8_t size, uint16_t min, uint16_t max, bool
   display.clearDisplay();
   display.setRotation(90);
 
+  uint8_t width = 128 / NUM_SENSORS;
+
   for (int i = 0; i < size; i++)
   {
     if (!invert)
     {
-      display.fillRect(114 - ((i * 12)), 0, 10, map(constrain(data[i], min, max), min, max, 0, 64), 1);
+      display.fillRect(((128 - width) - (i * width)), 0, width - 2, map(constrain(data[i], min, max), min, max, 0, 64), 1);
     }
     else
     {
-      display.fillRect(114 - ((i * 12)), 0, 10, map(constrain(data[i], min, max), max, min, 0, 64), 1);
+      display.fillRect(((128 - width) - (i * width)), 0, width - 2, map(constrain(data[i], min, max), max, min, 0, 64), 1);
     }
   }
   display.display();

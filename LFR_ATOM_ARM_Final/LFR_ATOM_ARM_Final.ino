@@ -18,8 +18,9 @@ Adafruit_SH1106G display = Adafruit_SH1106G(128, 64, &Wire);
 #endif
 
 #define PID_FREQ 10000 // Hz
+#define NUM_SENSORS 14 // Number of sensors in the array
 
-// Defines
+// Define Pins
 #define lmf PA6
 #define lmb PB5
 #define rmf PB7
@@ -73,10 +74,12 @@ byte f_dist, ir_dist, l_dist, r_dist;
 unsigned long m1, m2, m3;
 
 // variables for sensor data and calibration
-uint16_t maximum[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-uint16_t minimum[] = {4095, 4095, 4095, 4095, 4095, 4095, 4095, 4095, 4095, 4095};
-uint16_t thresh[] = {3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000};
-uint16_t sensor, s[10], base[] = {128, 64, 32, 16, 8, 4, 2, 1};
+uint16_t maximum[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+uint16_t minimum[] = {4095, 4095, 4095, 4095, 4095, 4095, 4095, 4095, 4095, 4095, 
+                      4095, 4095, 4095, 4095};
+uint16_t thresh[] = {3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 
+                     3000, 3000, 3000, 3000}; // Threshold values for sensors
+uint16_t sensor, s[NUM_SENSORS], base[] = {8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1};
 uint8_t sum;
 
 void setup()
@@ -121,16 +124,16 @@ void setup()
     digitalWrite(led, 0);
     home_screen();
 
-    for (byte i = 0; i < 10; i++)
+    for (byte i = 0; i < NUM_SENSORS; i++)
     {
-        thresh[i] = readUShort(35 + i * 2);
-        maximum[i] = readUShort(55 + i * 2);
-        minimum[i] = readUShort(75 + i * 2);
+        thresh[i] = readUShort(50 + i * 2);
+        maximum[i] = readUShort(90 + i * 2);
+        minimum[i] = readUShort(130 + i * 2);
     }
 
     for (byte i = 0; i < 70; i++)
     {
-        path[i] = EEPROM.read(i + 100);
+        path[i] = EEPROM.read(i + 200);
     }
 
     sp = EEPROM.read(0);

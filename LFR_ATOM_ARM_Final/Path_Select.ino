@@ -20,7 +20,7 @@ void path_reset()
   oled.set1X();
   for (byte i = 0; i < 70; i++)
   {
-    EEPROM.write(i + 100, 0);
+    EEPROM.write(i + 200, 0);
     text("=", i * 5 / 2, 1);
     text("=", i * 5 / 2, 6);
     path[i] = 0;
@@ -87,7 +87,7 @@ void path_select()
 
 void change_path(int a)
 {
-  byte cl = 100, sw, temp = EEPROM.read(99 + a), limit = 3;
+  byte cl = 100, sw, temp = EEPROM.read(199 + a), limit = 3;
   oled.set2X();
   oled.clear();
   oled.setInvertMode(0);
@@ -117,7 +117,7 @@ void change_path(int a)
     sw = btn_read(btn_m);
     if (sw == 1)
     {
-      EEPROM.write(99 + a, temp);
+      EEPROM.write(199 + a, temp);
       delay(10);
       // EEPROM.commit();
       path[a - 1] = temp;
