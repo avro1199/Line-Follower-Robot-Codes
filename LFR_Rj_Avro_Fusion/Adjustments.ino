@@ -27,9 +27,9 @@ String show_adjust(byte a)
   else if (a == 13)
     return "OBST. DIST.   ";
   else if (a == 14)
-    return "  PID         ";
+    return "OBST. TURN    ";
   else if (a == 15)
-    return "RIGHT WALL    ";
+    return "WALL  DIST.   ";
   else if (a == 16)
     return "RULE TURN     ";
   else if (a == 17)
@@ -152,8 +152,8 @@ void adjustment(byte a)
     limit = 2;
   else if (a == 13 || a == 15)
     limit = 30;
-  else if (a == 14)
-    limit = 9;
+  // else if (a == 14)
+  //   limit = 9;
   else if (a == 18)
     limit = 1;
   else if (a == 20)
@@ -173,7 +173,7 @@ void adjustment(byte a)
     sw = rswitch();
     if (sw == 1 && temp <= limit)
     {
-      ((a > 4 && a < 11) || a == 12) ? temp += 10 : temp++;
+      ((a > 4 && a < 11) || a == 12 || a == 14) ? temp += 5 : temp++;
       if (temp > limit)
         temp = 0;
     }
@@ -186,7 +186,7 @@ void adjustment(byte a)
     sw = lswitch();
     if (sw == 1 /*&& temp > 0*/)
     {
-      ((a > 4 && a < 11) || a == 12) ? temp -= 5 : temp--;
+      ((a > 4 && a < 11) || a == 12 || a == 14) ? temp -= 5 : temp--;
       if (temp > limit)
         temp = limit;
     }

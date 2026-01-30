@@ -7,7 +7,7 @@ String show_path(byte a)
   else if (a == 2)
     return "     RIGHT";
   else if (a == 3)
-    return "  BRIDGE  ";
+    return "UNIVERSAL ";
   else
     return "GARBAGE   ";
 }

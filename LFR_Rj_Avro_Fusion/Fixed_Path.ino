@@ -15,17 +15,16 @@ void fixed_path()
     reading();
     check_inverse();
     // sonar_reading(); // no need to check all the sonar
-    // front_dis = sonar_f.ping_cm();
-
-    // if (front_dis && front_dis < obs_dis)
-    // {
-    //   delay(10);
-    //   front_dis = sonar_f.ping_cm();
-    //   if (front_dis && front_dis < obs_dis)
-    //   {
-    //     avoid_obstacle();
-    //   }
-    // }
+    front_dis = sonar_f.ping_cm();
+    if (front_dis && front_dis < obs_dis)
+    {
+      delay(5);
+      front_dis = sonar_f.ping_cm();
+      if (front_dis && front_dis < obs_dis)
+      {
+        avoid_obstacle();
+      }
+    }
 
     // if (path[counter] == 4)
     // {
@@ -46,12 +45,12 @@ void fixed_path()
 
     if (sum == 0)
     {
-      sonar_reading();
-      if (left_dis && right_dis)
-      {
-        wall_follow();
-        goto point;
-      }
+      // sonar_reading();
+      // if (left_dis && right_dis)
+      // {
+      //   wall_follow();
+      //   goto point;
+      // }
 
       if (flag != 0)
       {
@@ -69,8 +68,8 @@ void fixed_path()
         if (path[counter] == 3)
         {
           digitalWrite(light, 1);
-          flag = 2;
-          cross = 2;
+          // rule_cross = 2;
+          // normal_cross = 2;
           motor(100, 100);
           // delay(100);
           line_follow();
@@ -122,10 +121,10 @@ void fixed_path()
         if (path[counter] == 3)
         {
           digitalWrite(light, 1);
+          // rule_cross = 2;
+          // normal_cross = 2;
           motor(100, 100);
-          flag = 2;
-          cross = 2;
-          // delay(3000);
+          // delay(100);
           line_follow();
         }
       }
@@ -158,14 +157,14 @@ void fixed_path()
         if (pos < 3)
           pos = 3;
         motor(10 * spl, -1 * spr);
-        // flag = 2; // only if bot can't hold on the line
+        flag = 2; // only if bot can't hold on the line
       }
       else if (sensor == 0b000001)
       {
         if (pos < 4)
           pos = 4;
         motor(10 * spl, -4 * spr);
-        // flag = 2; // only if bot can't hold on the line
+        flag = 2; // only if bot can't hold on the line
       }
       // left side portion
       else if (sensor == 0b001000)
@@ -187,14 +186,14 @@ void fixed_path()
         if (pos > -3)
           pos = -3;
         motor(-1 * spl, 10 * spr);
-        // flag = 1; // only if bot can't hold on the line
+        flag = 1; // only if bot can't hold on the line
       }
       else if (sensor == 0b100000)
       {
         if (pos > -4)
           pos = -4;
         motor(-4 * spl, 10 * spr);
-        // flag = 1; // only if bot can't hold on the line
+        flag = 1; // only if bot can't hold on the line
       }
     }
 
@@ -255,15 +254,15 @@ void fixed_path()
           oled.clear();
           oled.set2X();
           text("!!FINISH!!", 4, 1);
-          while (/*sum == 6 && */ digitalRead(swl) == HIGH && digitalRead(swr) == HIGH)
+          while (sum == 6 && digitalRead(swl) && digitalRead(swr))
             reading();
           oled.clear();
           oled.set2X();
           text("PathFollow", 04, 3);
           digitalWrite(light, 0);
-          if (digitalRead(swl) == HIGH && digitalRead(swr) == HIGH)
+          if (digitalRead(swl) && digitalRead(swr))
           {
-            delay(1000);
+            delay(100);
             goto point;
           }
           break;

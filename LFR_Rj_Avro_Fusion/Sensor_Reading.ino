@@ -10,7 +10,7 @@ void cal()
     minimum[i] = 1024;
   }
   motor(-100, 100);
-  for (short int c = 0; c < 3500; c++)
+  for (short int c = 0; c < 4500; c++)
     for (i = 0; i < 6; i++)
     {
       (i < 4) ? s[i] = analogRead(i) : s[i] = analogRead(i + 2);

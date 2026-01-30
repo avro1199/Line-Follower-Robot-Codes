@@ -16,26 +16,27 @@ void line_follow()
     reading();
     check_inverse();
     // sonar_reading(); // no need to check all the sonar *******************************
-    // front_dis = sonar_f.ping_cm();
+    front_dis = sonar_f.ping_cm();
 
-    // if (front_dis && (front_dis < obs_dis))
-    // {
-    //   delay(10);
-    //   front_dis = sonar_f.ping_cm(); // double check
-    //   if (front_dis && (front_dis < obs_dis))
-    //   {
-    //     avoid_obstacle();
-    //   }
-    // }
+    if (front_dis && (front_dis < obs_dis))
+    {
+      digitalWrite(light, 1);
+      delay(5);
+      front_dis = sonar_f.ping_cm(); // double check
+      if (front_dis && (front_dis < obs_dis))
+      {
+        avoid_obstacle();
+      }
+    }
 
     if (sum == 0)
     {
-      sonar_reading();
-      if (left_dis && right_dis)
-      {
-        wall_follow();
-        goto point;
-      }
+      // sonar_reading();
+      // if (left_dis && right_dis)
+      // {
+      //   wall_follow();
+      //   goto point;
+      // }
       if (flag != 0)
       {
         delay(node);
@@ -70,7 +71,9 @@ void line_follow()
             delay(tbr);
             pos = 0;
             digitalWrite(light, 0);
-            fixed_path();
+            // //hack
+            // fixed_path(); // Call the fixed_path function to follow the predefined path
+            // normal_cross = 2;
             break;
           }
         }
@@ -96,6 +99,8 @@ void line_follow()
         pos = 0;
         flag = 0;
         cross = 0;
+        //hack
+        // normal_cross = 0;
       }
       else if (sensor == 0b001100)
       {
@@ -214,6 +219,8 @@ void line_follow()
       flag = rule_turn;
       cross = rule_cross;
       // motor(6 * spl, 6 * spr);
+      //hack
+      // normal_cross = 3;
       while (sum == 6)
       {
         reading();
@@ -227,18 +234,17 @@ void line_follow()
           oled.clear();
           oled.set2X();
           text("!!FINISH!!", 4, 1);
-          while (/*sum == 6 &&  */ digitalRead(swl) == HIGH && digitalRead(swr) == HIGH)
+          while (sum == 6 && digitalRead(swl) && digitalRead(swr))
             reading();
           oled.clear();
           oled.set2X();
           text("LineFollow", 04, 3);
           digitalWrite(light, 0);
-          if (digitalRead(swl) == HIGH && digitalRead(swr) == HIGH)
+          if (digitalRead(swl) && digitalRead(swr))
           {
-            delay(1000);
+            delay(100);
             goto point;
           }
-
           break;
         }
       }
@@ -249,6 +255,7 @@ void line_follow()
     if (m2 - m3 > 200) // 200 old
     {
       flag = 0;
+      cross = 0;
       digitalWrite(light, 0);
     }
   }

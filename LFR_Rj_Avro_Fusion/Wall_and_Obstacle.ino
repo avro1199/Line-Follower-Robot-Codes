@@ -6,8 +6,8 @@ void wall_follow()
     delay(10);
     // hard_brake();
     digitalWrite(light, 1);
-    inv_mode = 1;
-    normal_cross = 0;
+    // inv_mode = 1;
+    // normal_cross = 0;
     reading();
 
     bool crx = 0;
@@ -95,64 +95,67 @@ void wall_follow()
     text("Normal Mode", 0, 3);
 }
 
-// void avoid_obstacle()
-// {
-//     oled.clear();
-//     text(" Obstacle ", 04, 3);
-//     nutral();
-//     hard_brake();
-//     spr = 13;
-//     spl = 13;
-//     digitalWrite(light, 1);
+void avoid_obstacle()
+{
+    oled.clear();
+    text(" Obstacle ", 04, 3);
+    nutral();
+    hard_brake();
+    delay(10);
+    spr = 13;
+    spl = 13;
+    digitalWrite(light, 1);
 
-//     (obs_side) ? motor(8 * spl, -8 * spr) : motor(-8 * spl, 8 * spr);
-//     delay(140);
-//     nutral();
-//     (obs_side) ? motor(-8 * spl, 8 * spr) : motor(8 * spl, -8 * spr);
-//     delay(25);
+    (obs_side) ? motor(7 * spl, -9 * spr) : motor(-10 * spl, 8 * spr);
+    delay(l_wall_dis * 3);
+    nutral();
+    (obs_side) ? motor(-8 * spl, 8 * spr) : motor(8 * spl, -8 * spr);
+    delay(25);
 
-//     motor(7 * spl, 7 * spr);
-//     delay(obs_delay * 3);
-//     nutral();
-//     hard_brake();
+    motor(7 * spl, 7 * spr);
+    delay(obs_delay * 3.7);
+    nutral();
+    // hard_brake();
 
-//     (obs_side) ? motor(-8 * spl, 8 * spr) : motor(8 * spl, -8 * spr);
-//     delay(180);
-//     nutral();
-//     (obs_side) ? motor(8 * spl, -8 * spr) : motor(-8 * spl, 8 * spr);
-//     delay(25);
+    (obs_side) ? motor(-7 * spl, 10 * spr) : motor(8 * spl, -4 * spr);
+    delay(l_wall_dis * 3.7);
+    nutral();
+    (obs_side) ? motor(8 * spl, -8 * spr) : motor(-8 * spl, 8 * spr);
+    delay(25);
 
-//     motor(7 * spl, 7 * spr);
-//     delay(obs_delay * 2.7);
-//     nutral();
-//     hard_brake();
+    motor(7 * spl, 7 * spr);
+    delay(obs_delay * 2.7);
+    nutral();
+    // hard_brake();
 
-//     (obs_side) ? motor(-8 * spl, 8 * spr) : motor(8 * spl, -8 * spr);
-//     delay(150);
+    (obs_side) ? motor(-7 * spl, 10 * spr) : motor(10 * spl, -7 * spr);
+    delay(l_wall_dis * 3.1);
 
-//     // jotokkhon na majhkhaner duita black pabe totokkhon soja jaite thakbe.
-//     reading();
-//     while (!s[1] && !s[2])
-//     {
-//         reading();
-//         motor(7 * spl, 7 * spr);
-//     }
+    // jotokkhon na majhkhaner duita black pabe totokkhon soja jaite thakbe.
+    reading();
+    while (!s[1] && !s[2])
+    {
+        reading();
+        motor(7 * spl, 7 * spr);
+    }
+    delay(25);
+    nutral();
 
-//     (obs_side) ? motor(8 * spl, -8 * spr) : motor(-8 * spl, 8 * spr);
-//     delay(80);
-//     nutral();
-//     (obs_side) ? motor(-8 * spl, 8 * spr) : motor(8 * spl, -8 * spr);
-//     delay(20);
+    (obs_side) ? motor(7 * spl, -9 * spr) : motor(-9 * spl, 7 * spr);
+    delay(80);
+    nutral();
+    (obs_side) ? motor(-8 * spl, 8 * spr) : motor(8 * spl, -8 * spr);
+    delay(20);
 
-//     (obs_side) ? pos = 4 : pos = -4;
+    (obs_side) ? pos = 4 : pos = -4;
 
-//     digitalWrite(light, 0);
+    digitalWrite(light, 0);
 
-//     oled.clear();
-//     text("Normal Mode", 0, 3);
-//     sp = EEPROM.read(18);
-//     le = EEPROM.read(19);
-//     re = EEPROM.read(20);
-//     spl = sp - le;
-//     spr = sp - re;
-// }
+    oled.clear();
+    text("Normal Mode", 0, 3);
+    sp = EEPROM.read(18);
+    le = EEPROM.read(19);
+    re = EEPROM.read(20);
+    spl = sp - le;
+    spr = sp - re;
+}

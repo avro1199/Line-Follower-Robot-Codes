@@ -3,7 +3,7 @@ void check_inverse()
     if (s[0] && s[5] && sum < 6)
     {
         m2 = m1 = millis();
-        motor(60, 60);
+        // motor(60, 60);
         while (s[0] && s[5] && (sum < 6) && (sum > 3))
         {
             reading();
